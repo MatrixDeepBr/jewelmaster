@@ -1,0 +1,48 @@
+/* telas/00-login/login.css */
+
+.tela-login {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--espaco-4);
+}
+
+.cartao-login {
+  width: 100%;
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--espaco-4);
+  /* O logo tem fundo creme — o cartão claro faz ele parecer intencional
+     mesmo no tema escuro, em vez de um retângulo solto na tela. */
+  background: #FFFDF7;
+}
+
+.cartao-login__logo {
+  width: 100%;
+  height: auto;
+  border-radius: var(--raio-medio);
+  display: block;
+}
+
+.tela-login__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-3);
+}
+
+.tela-login__erro {
+  margin: 0;
+  color: var(--cor-status-critico);
+  font-size: var(--texto-pequeno);
+  line-height: 1.4;
+}
+
+.botao-tema--canto {
+  position: fixed;
+  top: var(--espaco-3);
+  right: var(--espaco-3);
+  z-index: 10;
+}

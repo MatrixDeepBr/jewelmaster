@@ -1,0 +1,214 @@
+/* vendedoras.css — estilos específicos da tela de Cadastro de Vendedoras
+   Usa somente variáveis e padrões já definidos em core/tokens.css e core/components.css */
+
+.layout-admin {
+  display: flex;
+  min-height: calc(100vh - 56px); /* desconta a altura aproximada do cabeçalho */
+}
+
+.conteudo-principal {
+  flex: 1;
+  padding: var(--espaco-4);
+  max-width: 960px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.tela-carregando {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--espaco-6);
+  color: var(--cor-texto-secundario);
+}
+
+.oculto {
+  display: none !important;
+}
+
+.cabecalho-secao {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaco-3);
+  margin-bottom: var(--espaco-4);
+}
+
+.titulo-pagina {
+  font-size: var(--texto-titulo-grande);
+  color: var(--cor-texto-principal);
+  margin: 0;
+}
+
+/* Lista de vendedoras */
+.lista-vendedoras {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+}
+
+.card-vendedora {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaco-3);
+  cursor: pointer;
+  padding: var(--espaco-3);
+}
+
+.card-vendedora:hover {
+  border-color: var(--cor-acento);
+}
+
+.info-vendedora-nome {
+  font-size: var(--texto-destaque);
+  color: var(--cor-texto-principal);
+  font-weight: 600;
+}
+
+.info-vendedora-email {
+  font-size: var(--texto-pequeno);
+  color: var(--cor-texto-secundario);
+}
+
+.badge-status {
+  font-size: var(--texto-pequeno);
+  padding: var(--espaco-1) var(--espaco-2);
+  border-radius: var(--raio-pill);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.badge-status-ativa {
+  background: var(--cor-status-ok);
+  color: #FFFFFF;
+}
+
+.badge-status-inativa {
+  background: var(--cor-texto-secundario);
+  color: #FFFFFF;
+}
+
+.badge-status-pendente {
+  background: var(--cor-status-atencao);
+  color: #1B1B1B;
+}
+
+.mensagem-vazia {
+  color: var(--cor-texto-secundario);
+  text-align: center;
+  padding: var(--espaco-5) 0;
+}
+
+/* Formulário */
+.formulario-vendedora {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-4);
+}
+
+.grupo-campos {
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-medio);
+  padding: var(--espaco-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-3);
+}
+
+.grupo-campos legend {
+  padding: 0 var(--espaco-2);
+  color: var(--cor-texto-secundario);
+  font-size: var(--texto-pequeno);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-1);
+}
+
+.rotulo-campo {
+  font-size: var(--texto-corpo);
+  color: var(--cor-texto-principal);
+  font-weight: 600;
+}
+
+.campo input[type="text"],
+.campo input[type="email"],
+.campo input[type="tel"],
+.campo input[type="number"],
+.campo select,
+.campo textarea {
+  font-family: var(--fonte-base);
+  font-size: var(--texto-corpo);
+  padding: var(--espaco-2);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-pequeno);
+  background: var(--cor-superficie);
+  color: var(--cor-texto-principal);
+}
+
+.campo input:focus,
+.campo select:focus,
+.campo textarea:focus {
+  outline: 2px solid var(--cor-acento);
+  outline-offset: 1px;
+}
+
+.campo-checkbox {
+  flex-direction: row;
+  align-items: center;
+  gap: var(--espaco-2);
+}
+
+.dica-campo {
+  font-size: var(--texto-pequeno);
+  color: var(--cor-texto-secundario);
+}
+
+.linha-senha {
+  display: flex;
+  gap: var(--espaco-2);
+}
+
+.linha-senha input {
+  flex: 1;
+}
+
+.bloco-senha-inicial.oculto {
+  display: none;
+}
+
+.area-mensagem-formulario:empty {
+  display: none;
+}
+
+.area-mensagem-formulario {
+  padding: var(--espaco-2) var(--espaco-3);
+  border-radius: var(--raio-pequeno);
+  font-size: var(--texto-corpo);
+}
+
+.area-mensagem-formulario.mensagem-erro {
+  background: var(--cor-acento-claro);
+  color: var(--cor-status-critico);
+  border: 1px solid var(--cor-status-critico);
+}
+
+.linha-acoes-formulario {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--espaco-2);
+}
+
+@media (max-width: 640px) {
+  .layout-admin {
+    flex-direction: column;
+  }
+  .cabecalho-secao {
+    flex-wrap: wrap;
+  }
+}

@@ -1,0 +1,30 @@
+WORKERS DA CLOUDFLARE — JewelMaster
+=====================================
+
+criar-login-vendedora.js  (publicado na Sessão 2)
+--------------------------------------------------
+O que faz: recebe da tela "Vendedoras" (Admin) um e-mail, senha inicial e nome,
+confere que quem está pedindo é realmente a Admin logada, e cria o login da
+nova vendedora no Firebase Authentication — sem deslogar a Admin no processo.
+
+Antes de publicar, é preciso preencher no topo do arquivo:
+- FIREBASE_API_KEY: a mesma "apiKey" que já está em core/firebase-config.js.
+- (FIREBASE_PROJECT_ID já vem preenchido: joias-app-d295e)
+- ORIGEM_PERMITIDA já vem preenchida com o endereço do GitHub Pages.
+
+Depois de publicar, copie o endereço que a Cloudflare gerar
+(algo como "criar-login-vendedora.SEU-USUARIO.workers.dev") e cole na
+constante URL_WORKER_CRIAR_LOGIN, no topo de
+telas/02-vendedoras/vendedoras.js.
+
+Passo a passo completo de publicação: ver o relatório da Sessão 2
+(RELATORIO_SESSAO_2.md), seção "Passo a passo de configuração".
+
+PENDENTE PARA A SESSÃO 3
+--------------------------
+Worker de upload de fotos para o Cloudflare R2 (cadastro de produtos).
+Motivo de ser um Worker (e não upload direto do navegador): fazer upload
+direto do navegador para o R2 exigiria expor a chave secreta no código,
+visível a qualquer visitante do site. O Worker guarda essa chave em
+segurança e devolve uma URL temporária de upload.
+Pode reaproveitar a mesma conta Cloudflare já criada na Sessão 2.

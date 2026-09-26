@@ -1,0 +1,63 @@
+// firestore.rules — Regras de segurança do Firestore (JewelMaster)
+//
+// ⚠️ ATENÇÃO: este arquivo, sozinho, NÃO faz nada. Ele só existe aqui
+// como cópia local. Para valer de verdade, o conteúdo precisa ser colado
+// manualmente no Firebase Console (Firestore Database > aba "Regras" >
+// Publicar).
+//
+// Política geral: tudo bloqueado por padrão. Cada sessão que criar uma
+// coleção nova deve liberar essa coleção aqui, e republicar.
+
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Função auxiliar: true se quem está fazendo a requisição está
+    // logada E o documento users/{uid} dela diz role == "admin".
+    function ehAdminLogado() {
+      return request.auth != null &&
+        exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    // ---------- Coleção "users" ----------
+    match /users/{uid} {
+
+      // Qualquer pessoa logada pode ler o PRÓPRIO documento.
+      allow read: if request.auth != null && request.auth.uid == uid;
+
+      // A Admin pode ler o documento de qualquer usuária.
+      allow read: if ehAdminLogado();
+
+      // A pessoa pode ATUALIZAR o próprio documento, mas SOMENTE o campo "theme".
+      allow update: if request.auth != null &&
+        request.auth.uid == uid &&
+        request.resource.data.diff(resource.data).affectedKeys().hasOnly(['theme']);
+
+      // Acrescentado na Sessão 2: a Admin pode CRIAR o documento de uma
+      // vendedora nova (depois do Worker criar o login dela no Authentication).
+      allow create: if ehAdminLogado();
+
+      allow delete: if false;
+    }
+
+    // ---------- Coleção "sellers" (liberada na Sessão 2) ----------
+    match /sellers/{sellerId} {
+
+      // A Admin pode ler, criar e atualizar qualquer vendedora.
+      allow read, create, update: if ehAdminLogado();
+
+      // A vendedora pode ler APENAS o próprio documento (onde userId
+      // é igual ao uid de quem está logada) — não pode editar.
+      allow read: if request.auth != null && resource.data.userId == request.auth.uid;
+
+      allow delete: if false;
+    }
+
+    // ---------- Todas as outras coleções: bloqueadas até serem construídas ----------
+    match /{colecaoQualquer}/{documentoQualquer} {
+      allow read, write: if false;
+    }
+  }
+}

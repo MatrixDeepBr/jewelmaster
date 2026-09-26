@@ -1,0 +1,49 @@
+/* telas/01-inicio/inicio.css */
+
+.conteudo-inicio {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: var(--espaco-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-4);
+}
+
+.boas-vindas {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-1);
+}
+
+.boas-vindas h1 {
+  font-size: var(--texto-titulo-grande);
+}
+
+.boas-vindas p {
+  color: var(--cor-texto-secundario);
+}
+
+/* Espaço reservado para os KPIs do Admin (próximas sessões) */
+.grade-kpis-placeholder {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: var(--espaco-3);
+}
+
+.kpi-placeholder {
+  min-height: 88px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cor-texto-secundario);
+  font-size: var(--texto-pequeno);
+  border: 1px dashed var(--cor-borda);
+  background: var(--cor-superficie);
+}
+
+/* Espaço reservado para os botões principais da Vendedora (próximas sessões) */
+.botoes-vendedora-placeholder {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-3);
+}

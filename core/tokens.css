@@ -1,0 +1,101 @@
+/* core/tokens.css
+   Variáveis visuais do projeto JewelMaster (paleta Windows 11 / Fluent
+   Design, já definida em CONVENCOES_TECNICAS.md). Toda tela deve usar
+   estas variáveis — nunca cor "chumbada" direto no CSS de uma tela.
+
+   IMPORTANTE (nota para o futuro): o logo do JewelMaster usa azul-marinho
+   e dourado, mas o SISTEMA (botões, telas, menus) usa a paleta azul
+   Fluent abaixo, por decisão da Sessão 1 — para não trocar toda a
+   identidade visual do app já construído nesta sessão. Se um dia quiser
+   que o app inteiro passe a usar as cores do logo, é AQUI (seção 1 deste
+   arquivo) que se troca — só os valores hexadecimais, nada mais no
+   projeto depende da cor em si, todas as telas usam as variáveis. */
+
+/* 1. Cores de tema — Tema Claro (padrão, aplicado no :root) */
+:root {
+  --cor-fundo: #F3F3F3;
+  --cor-superficie: #FFFFFF;
+  --cor-acento: #0078D4;
+  --cor-acento-hover: #005A9E;
+  --cor-acento-claro: #DEECF9;
+  --cor-acento-texto: #FFFFFF;
+  --cor-texto-principal: #1B1B1B;
+  --cor-texto-secundario: #5F5F5F;
+  --cor-borda: #D6D6D6;
+
+  /* 2. Cores de status — fixas, não mudam por tema */
+  --cor-status-ok: #3FA34D;
+  --cor-status-atencao: #F2B705;
+  --cor-status-critico: #E23E3E;
+
+  /* 3. Raio de cantos */
+  --raio-pequeno: 6px;
+  --raio-medio: 10px;
+  --raio-grande: 16px;
+  --raio-pill: 999px;
+
+  /* 4. Espaçamento */
+  --espaco-1: 4px;
+  --espaco-2: 8px;
+  --espaco-3: 16px;
+  --espaco-4: 24px;
+  --espaco-5: 32px;
+  --espaco-6: 48px;
+
+  /* 5. Tipografia */
+  --fonte-base: "Segoe UI", -apple-system, "Helvetica Neue", Arial, sans-serif;
+  --texto-pequeno: 12px;
+  --texto-corpo: 14px;
+  --texto-destaque: 16px;
+  --texto-titulo: 20px;
+  --texto-titulo-grande: 28px;
+
+  /* 6. Sombra e elevação */
+  --sombra-card: 0 1px 3px rgba(0, 0, 0, 0.12);
+  --sombra-modal: 0 8px 24px rgba(0, 0, 0, 0.20);
+}
+
+/* 1. Cores de tema — Tema Escuro (aplicado quando <body> tem a classe
+   "tema-escuro"; ver core/components.js, função aplicarTema) */
+body.tema-escuro {
+  --cor-fundo: #202020;
+  --cor-superficie: #2C2C2C;
+  --cor-acento: #4CC2FF;
+  --cor-acento-hover: #6FD0FF;
+  --cor-acento-claro: #1F3A47;
+  --cor-acento-texto: #10222B;
+  --cor-texto-principal: #FFFFFF;
+  --cor-texto-secundario: #C5C5C5;
+  --cor-borda: #3D3D3D;
+}
+
+/* Reset simples e base tipográfica, compartilhados por todo o app. */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--cor-fundo);
+  color: var(--cor-texto-principal);
+  font-family: var(--fonte-base);
+  font-size: var(--texto-corpo);
+  transition: background-color 0.15s ease, color 0.15s ease;
+  min-height: 100vh;
+}
+
+h1, h2, h3, p {
+  margin: 0;
+}
+
+button, input {
+  font-family: inherit;
+}
+
+a {
+  color: var(--cor-acento);
+}

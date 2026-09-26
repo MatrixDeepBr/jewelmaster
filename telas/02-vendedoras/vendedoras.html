@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JewelMaster — Vendedoras</title>
+  <link rel="icon" href="../../assets/icons/favicon-32.png" />
+  <link rel="stylesheet" href="../../core/tokens.css" />
+  <link rel="stylesheet" href="../../core/components.css" />
+  <link rel="stylesheet" href="../../core/navegacao.css" />
+  <link rel="stylesheet" href="./vendedoras.css" />
+</head>
+<body>
+  <!-- Cabeçalho é montado via JS (criarCabecalho, de core/navegacao.js) -->
+  <div id="area-cabecalho"></div>
+
+  <div class="layout-admin">
+    <!-- Menu lateral do Admin: reaproveita a área .area-menu-lateral já reservada em navegacao.css -->
+    <nav class="area-menu-lateral" id="menu-lateral"></nav>
+
+    <main class="conteudo-principal">
+      <!-- Tela de carregamento inicial (checagem de sessão/permissão) -->
+      <div id="tela-carregando" class="tela-carregando">
+        <p>Carregando...</p>
+      </div>
+
+      <!-- VISÃO 1: Lista de Vendedoras -->
+      <section id="visao-lista" class="visao oculto">
+        <div class="cabecalho-secao">
+          <h1 class="titulo-pagina">Vendedoras</h1>
+          <button id="botao-nova-vendedora" class="botao botao-primario">+ Nova Vendedora</button>
+        </div>
+        <div id="lista-vendedoras" class="lista-vendedoras">
+          <!-- cards de vendedora inseridos via JS (criarCard) -->
+        </div>
+        <p id="lista-vazia" class="mensagem-vazia oculto">Nenhuma vendedora cadastrada ainda.</p>
+      </section>
+
+      <!-- VISÃO 2: Cadastro / Edição de Vendedora -->
+      <section id="visao-formulario" class="visao oculto">
+        <div class="cabecalho-secao">
+          <button id="botao-voltar" class="botao botao-secundario">&larr; Voltar</button>
+          <h1 id="titulo-formulario" class="titulo-pagina">Nova Vendedora</h1>
+        </div>
+
+        <form id="formulario-vendedora" class="card formulario-vendedora">
+          <input type="hidden" id="campo-uid" />
+          <input type="hidden" id="campo-seller-id" />
+
+          <fieldset class="grupo-campos">
+            <legend>Dados básicos</legend>
+
+            <label class="campo">
+              <span class="rotulo-campo">Nome completo</span>
+              <input type="text" id="campo-nome" required autocomplete="name" />
+            </label>
+
+            <label class="campo">
+              <span class="rotulo-campo">Contato (telefone/WhatsApp)</span>
+              <input type="tel" id="campo-contato" placeholder="(00) 00000-0000" />
+            </label>
+
+            <label class="campo">
+              <span class="rotulo-campo">E-mail (usado como login)</span>
+              <input type="email" id="campo-email" required autocomplete="email" />
+            </label>
+
+            <div id="bloco-senha-inicial" class="bloco-senha-inicial">
+              <label class="campo">
+                <span class="rotulo-campo">Senha inicial de acesso</span>
+                <div class="linha-senha">
+                  <input type="text" id="campo-senha" required minlength="6" />
+                  <button type="button" id="botao-gerar-senha" class="botao botao-secundario">Gerar senha</button>
+                </div>
+                <span class="dica-campo">A vendedora pode trocar essa senha depois. Anote ou copie antes de salvar.</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <fieldset class="grupo-campos">
+            <legend>Acordo comercial</legend>
+
+            <label class="campo">
+              <span class="rotulo-campo">Tipo de comissão</span>
+              <select id="campo-tipo-comissao" required>
+                <option value="percentual">Percentual sobre vendas</option>
+                <option value="valorFixoPorPeca">Valor fixo por peça vendida</option>
+                <option value="descontoPelaVendedora">Desconto direto pela vendedora</option>
+              </select>
+            </label>
+
+            <label class="campo">
+              <span id="rotulo-valor-comissao" class="rotulo-campo">%</span>
+              <input type="number" id="campo-valor-comissao" step="0.01" min="0" required />
+            </label>
+
+            <label class="campo">
+              <span class="rotulo-campo">Observação (opcional)</span>
+              <textarea id="campo-observacao" rows="2" maxlength="300"></textarea>
+            </label>
+          </fieldset>
+
+          <fieldset id="bloco-status" class="grupo-campos oculto">
+            <legend>Status</legend>
+            <label class="campo campo-checkbox">
+              <input type="checkbox" id="campo-ativa" />
+              <span>Vendedora ativa</span>
+            </label>
+          </fieldset>
+
+          <div id="area-mensagem-formulario" class="area-mensagem-formulario"></div>
+
+          <div class="linha-acoes-formulario">
+            <button type="submit" id="botao-salvar" class="botao botao-primario">Salvar</button>
+          </div>
+        </form>
+      </section>
+    </main>
+  </div>
+
+  <script type="module" src="./vendedoras.js"></script>
+</body>
+</html>

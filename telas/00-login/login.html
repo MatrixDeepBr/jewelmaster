@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JewelMaster — Entrar</title>
+  <link rel="manifest" href="../../manifest.json">
+  <link rel="icon" href="../../assets/icons/favicon-32.png">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <meta name="theme-color" content="#0078D4">
+  <link rel="stylesheet" href="../../core/tokens.css">
+  <link rel="stylesheet" href="../../core/components.css">
+  <link rel="stylesheet" href="./login.css">
+</head>
+<body>
+
+  <button id="botao-tema-canto" class="botao-tema botao-tema--canto" type="button" aria-label="Alternar tema claro/escuro">🌙</button>
+
+  <main class="tela-login">
+    <div class="cartao-login card">
+      <img class="cartao-login__logo" src="../../assets/logos/logo-completo.png" alt="JewelMaster — Gestor de Vendas de Joias">
+
+      <form id="form-login" class="tela-login__form" novalidate>
+        <div class="campo">
+          <label for="campo-email">E-mail</label>
+          <input type="email" id="campo-email" name="email" autocomplete="username" required>
+        </div>
+
+        <div class="campo">
+          <label for="campo-senha">Senha</label>
+          <input type="password" id="campo-senha" name="senha" autocomplete="current-password" required>
+        </div>
+
+        <p id="mensagem-erro" class="tela-login__erro" role="alert" hidden></p>
+
+        <button type="submit" id="botao-entrar" class="botao botao-principal botao-grande">Entrar</button>
+      </form>
+    </div>
+  </main>
+
+  <script type="module" src="./login.js"></script>
+</body>
+</html>

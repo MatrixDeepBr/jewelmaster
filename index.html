@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JewelMaster</title>
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" href="./assets/icons/favicon-32.png">
+  <link rel="apple-touch-icon" href="./assets/icons/apple-touch-icon.png">
+  <meta name="theme-color" content="#0078D4">
+  <link rel="stylesheet" href="./core/tokens.css">
+  <link rel="stylesheet" href="./core/components.css">
+</head>
+<body>
+  <div id="raiz-index"></div>
+
+  <script type="module">
+    // index.html é só uma "porta de entrada": decide se manda a pessoa
+    // para o login ou direto para a tela inicial, conforme já exista uma
+    // sessão ativa. Necessário para o site abrir corretamente no endereço
+    // principal (ex: https://usuario.github.io/joias-app/), que aponta
+    // pra este arquivo — não faz parte das pastas /telas por não ser,
+    // ele mesmo, uma tela com conteúdo próprio (ver relatório final,
+    // seção de desvios).
+    import { observarSessao } from './core/auth.js';
+    import { mostrarCarregando } from './core/components.js';
+
+    mostrarCarregando(document.getElementById('raiz-index'), 'Abrindo o JewelMaster…');
+
+    observarSessao((usuarioFirebase) => {
+      if (usuarioFirebase) {
+        window.location.href = './telas/01-inicio/inicio.html';
+      } else {
+        window.location.href = './telas/00-login/login.html';
+      }
+    });
+  </script>
+</body>
+</html>

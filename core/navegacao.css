@@ -1,0 +1,99 @@
+/* core/navegacao.css
+   Cabeçalho compartilhado por todas as telas logadas: nome do app,
+   nome da pessoa, botão de tema e botão "Sair". A partir da Sessão 2,
+   também estiliza o menu lateral do Admin, dentro de .area-menu-lateral. */
+
+.cabecalho-app {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaco-3);
+  padding: var(--espaco-3) var(--espaco-4);
+  background: var(--cor-superficie);
+  border-bottom: 1px solid var(--cor-borda);
+}
+
+.cabecalho-app__marca {
+  display: flex;
+  align-items: baseline;
+  gap: var(--espaco-2);
+  min-width: 0;
+}
+
+.cabecalho-app__nome-app {
+  font-size: var(--texto-destaque);
+  font-weight: 700;
+  color: var(--cor-texto-principal);
+  white-space: nowrap;
+}
+
+.cabecalho-app__nome-usuario {
+  font-size: var(--texto-pequeno);
+  color: var(--cor-texto-secundario);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cabecalho-app__acoes {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-2);
+  flex-shrink: 0;
+}
+
+/* Menu lateral do Admin (conteúdo acrescentado na Sessão 2). Fica
+   escondido quando vazio (telas sem menu, como a de Vendedora). */
+.area-menu-lateral {
+  display: none;
+}
+
+.area-menu-lateral:not(:empty) {
+  display: block;
+  padding: var(--espaco-3);
+  border-right: 1px solid var(--cor-borda);
+}
+
+@media (min-width: 900px) {
+  .area-menu-lateral:not(:empty) {
+    width: 220px;
+    flex-shrink: 0;
+    min-height: calc(100vh - 57px);
+  }
+}
+
+.menu-lateral-conteudo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-1);
+}
+
+.item-menu-lateral {
+  display: block;
+  padding: var(--espaco-2) var(--espaco-3);
+  border-radius: var(--raio-pequeno);
+  color: var(--cor-texto-principal);
+  text-decoration: none;
+  font-size: var(--texto-corpo);
+}
+
+.item-menu-lateral:hover {
+  background: var(--cor-acento-claro);
+}
+
+.item-menu-lateral-ativo {
+  background: var(--cor-acento);
+  color: var(--cor-acento-texto);
+  font-weight: 600;
+}
+
+@media (max-width: 640px) {
+  .area-menu-lateral:not(:empty) {
+    border-right: none;
+    border-bottom: 1px solid var(--cor-borda);
+  }
+  .menu-lateral-conteudo {
+    flex-direction: row;
+    overflow-x: auto;
+  }
+}
