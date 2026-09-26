@@ -8,7 +8,7 @@ import {
 } from '../../core/auth.js';
 import { ehAdmin, ehVendedora } from '../../core/permissions.js';
 import { aplicarTema, obterTemaSalvoLocalmente, mostrarCarregando, mostrarToast } from '../../core/components.js';
-import { criarCabecalho } from '../../core/navegacao.js';
+import { criarCabecalho, criarMenuLateralAdmin } from '../../core/navegacao.js';
 
 const raiz = document.getElementById('raiz-inicio');
 
@@ -84,7 +84,7 @@ function montarTelaInicial(perfil) {
   });
 
   const conteudo = document.createElement('main');
-  conteudo.className = 'conteudo-inicio';
+  conteudo.className = 'conteudo-inicio conteudo-principal';
 
   if (ehAdmin(perfil)) {
     conteudo.innerHTML = `
@@ -99,18 +99,36 @@ function montarTelaInicial(perfil) {
         <div class="kpi-placeholder">Estoque total</div>
       </div>
     `;
-  } else {
-    conteudo.innerHTML = `
-      <div class="boas-vindas">
-        <h1>Login funcionando — bem-vinda, ${escaparTexto(perfil.name || '')}</h1>
-        <p>Esta é a sua tela inicial. Os botões abaixo serão ativados nas próximas sessões.</p>
-      </div>
-      <div class="botoes-vendedora-placeholder">
-        <button type="button" class="botao botao-principal botao-grande" disabled>Nova Venda</button>
-        <button type="button" class="botao botao-secundario botao-grande" disabled>Minha Maleta</button>
-      </div>
-    `;
+
+    // Acrescentado nesta correção: menu lateral do Admin, igual ao já
+    // usado em telas/02-vendedoras/vendedoras.html. Segue a mesma
+    // estrutura (nav com id="menu-lateral" e classe "area-menu-lateral",
+    // dentro de um wrapper "layout-admin") para as próximas sessões
+    // reaproveitarem sem duplicar nada.
+    const layout = document.createElement('div');
+    layout.className = 'layout-admin';
+
+    const menuLateral = document.createElement('nav');
+    menuLateral.className = 'area-menu-lateral';
+    menuLateral.id = 'menu-lateral';
+    menuLateral.appendChild(criarMenuLateralAdmin({ itemAtivo: 'inicio' }));
+
+    layout.append(menuLateral, conteudo);
+    raiz.append(cabecalho, layout);
+    return;
   }
+
+  // Visão da Vendedora: sem menu lateral, layout simples (igual já era).
+  conteudo.innerHTML = `
+    <div class="boas-vindas">
+      <h1>Login funcionando — bem-vinda, ${escaparTexto(perfil.name || '')}</h1>
+      <p>Esta é a sua tela inicial. Os botões abaixo serão ativados nas próximas sessões.</p>
+    </div>
+    <div class="botoes-vendedora-placeholder">
+      <button type="button" class="botao botao-principal botao-grande" disabled>Nova Venda</button>
+      <button type="button" class="botao botao-secundario botao-grande" disabled>Minha Maleta</button>
+    </div>
+  `;
 
   raiz.append(cabecalho, conteudo);
 }
