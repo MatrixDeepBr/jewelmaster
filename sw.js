@@ -4,10 +4,10 @@
 // NUNCA guarda em cache chamadas ao Firebase/Firestore/Authentication —
 // só os arquivos do próprio site (o "esqueleto" do app).
 
-// Aumente este número (ex: 'jewelmaster-v2') sempre que publicar uma
+// Aumente este número (ex: 'jewelmaster-v3') sempre que publicar uma
 // mudança de arquivos e quiser forçar os celulares/navegadores a
 // buscarem a versão nova em vez de continuar usando o cache antigo.
-const VERSAO_CACHE = 'jewelmaster-v1';
+const VERSAO_CACHE = 'jewelmaster-v2';
 
 // Arquivos do "esqueleto" do app, guardados em cache na instalação para
 // o app abrir mesmo sem internet depois da primeira visita.
@@ -29,6 +29,9 @@ const ARQUIVOS_ESQUELETO = [
   './telas/01-inicio/inicio.html',
   './telas/01-inicio/inicio.js',
   './telas/01-inicio/inicio.css',
+  './telas/02-vendedoras/vendedoras.html',
+  './telas/02-vendedoras/vendedoras.js',
+  './telas/02-vendedoras/vendedoras.css',
   './assets/icons/icon-192.png',
   './assets/icons/icon-512.png',
   './assets/icons/apple-touch-icon.png',
