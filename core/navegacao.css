@@ -1,7 +1,9 @@
 /* core/navegacao.css
    Cabeçalho compartilhado por todas as telas logadas: nome do app,
    nome da pessoa, botão de tema e botão "Sair". A partir da Sessão 2,
-   também estiliza o menu lateral do Admin, dentro de .area-menu-lateral. */
+   também estiliza o menu lateral do Admin, dentro de .area-menu-lateral,
+   e o layout de duas colunas (.layout-admin) usado por qualquer tela
+   do Admin que tenha menu lateral. */
 
 .cabecalho-app {
   display: flex;
@@ -42,8 +44,21 @@
   flex-shrink: 0;
 }
 
-/* Menu lateral do Admin (conteúdo acrescentado na Sessão 2). Fica
-   escondido quando vazio (telas sem menu, como a de Vendedora). */
+/* Layout de duas colunas usado por qualquer tela do Admin que tenha
+   menu lateral (ex.: Vendedoras, Início, e as próximas telas do Admin). */
+.layout-admin {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 900px) {
+  .layout-admin {
+    flex-direction: row;
+  }
+}
+
+/* Menu lateral do Admin. Fica escondido quando vazio (telas sem menu,
+   como a visão da Vendedora). */
 .area-menu-lateral {
   display: none;
 }
@@ -96,4 +111,9 @@
     flex-direction: row;
     overflow-x: auto;
   }
+}
+
+.conteudo-principal {
+  flex: 1;
+  min-width: 0;
 }
