@@ -1,0 +1,220 @@
+/* produtos.css — estilos próprios da tela de Cadastro de Produtos */
+
+.cabecalho-tela {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaco-3);
+  margin-bottom: var(--espaco-4);
+  flex-wrap: wrap;
+}
+
+.cabecalho-tela h1 {
+  font-size: var(--texto-titulo-grande);
+  color: var(--cor-texto-principal);
+  margin: 0;
+}
+
+.barra-busca {
+  margin-bottom: var(--espaco-4);
+}
+
+.campo-busca {
+  max-width: 420px;
+}
+
+/* ---------- Lista de produtos ---------- */
+
+.lista-produtos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--espaco-3);
+}
+
+.card-produto {
+  background: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-medio);
+  box-shadow: var(--sombra-card);
+  padding: var(--espaco-3);
+  cursor: pointer;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+}
+
+.card-produto:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--sombra-modal);
+}
+
+.card-produto__foto {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: var(--raio-pequeno);
+  background: var(--cor-fundo);
+  border: 1px solid var(--cor-borda);
+}
+
+.card-produto__foto-placeholder {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: var(--raio-pequeno);
+  background: var(--cor-fundo);
+  border: 1px dashed var(--cor-borda);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  color: var(--cor-texto-secundario);
+}
+
+.card-produto__nome {
+  font-size: var(--texto-destaque);
+  font-weight: 600;
+  color: var(--cor-texto-principal);
+}
+
+.card-produto__codigo {
+  font-size: var(--texto-pequeno);
+  color: var(--cor-texto-secundario);
+  font-family: monospace;
+}
+
+.card-produto__linha-inferior {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card-produto__preco {
+  font-weight: 600;
+  color: var(--cor-acento);
+}
+
+.card-produto__estoque {
+  font-size: var(--texto-pequeno);
+  color: var(--cor-texto-secundario);
+}
+
+.card-produto--inativo {
+  opacity: 0.55;
+}
+
+.badge-status {
+  font-size: var(--texto-pequeno);
+  padding: 2px var(--espaco-2);
+  border-radius: var(--raio-pill);
+  font-weight: 600;
+}
+
+.badge-status--ok {
+  background: var(--cor-acento-claro);
+  color: var(--cor-acento);
+}
+
+.badge-status--inativo {
+  background: var(--cor-borda);
+  color: var(--cor-texto-secundario);
+}
+
+.mensagem-vazia {
+  color: var(--cor-texto-secundario);
+  text-align: center;
+  padding: var(--espaco-5) 0;
+}
+
+/* ---------- Formulário ---------- */
+
+.formulario-produto {
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-3);
+}
+
+.campo-grupo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-1);
+  flex: 1;
+}
+
+.campo-grupo label {
+  font-size: var(--texto-corpo);
+  color: var(--cor-texto-secundario);
+}
+
+.campo-linha {
+  display: flex;
+  gap: var(--espaco-3);
+  flex-wrap: wrap;
+}
+
+.campo-checkbox label {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-2);
+  color: var(--cor-texto-principal);
+}
+
+.previa-foto-container {
+  margin-top: var(--espaco-2);
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-3);
+}
+
+.previa-foto {
+  width: 96px;
+  height: 96px;
+  object-fit: cover;
+  border-radius: var(--raio-pequeno);
+  border: 1px solid var(--cor-borda);
+}
+
+.mensagem-sem-foto {
+  color: var(--cor-texto-secundario);
+  font-size: var(--texto-pequeno);
+}
+
+.status-upload {
+  font-size: var(--texto-pequeno);
+  margin-top: var(--espaco-1);
+}
+
+.status-upload--carregando {
+  color: var(--cor-texto-secundario);
+}
+
+.status-upload--erro {
+  color: var(--cor-status-critico);
+}
+
+.status-upload--ok {
+  color: var(--cor-status-ok);
+}
+
+.mensagem-erro {
+  color: var(--cor-status-critico);
+  background: rgba(226, 62, 62, 0.08);
+  border: 1px solid var(--cor-status-critico);
+  border-radius: var(--raio-pequeno);
+  padding: var(--espaco-2) var(--espaco-3);
+  font-size: var(--texto-corpo);
+}
+
+.acoes-formulario {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--espaco-3);
+  margin-top: var(--espaco-2);
+}
+
+@media (max-width: 600px) {
+  .campo-linha {
+    flex-direction: column;
+  }
+}

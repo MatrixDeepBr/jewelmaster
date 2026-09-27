@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JewelMaster — Produtos</title>
+  <link rel="icon" href="../../assets/icons/favicon-32.png">
+  <link rel="stylesheet" href="../../core/tokens.css">
+  <link rel="stylesheet" href="../../core/components.css">
+  <link rel="stylesheet" href="../../core/navegacao.css">
+  <link rel="stylesheet" href="./produtos.css">
+</head>
+<body>
+  <div class="layout-admin">
+    <nav class="area-menu-lateral" id="menu-lateral"></nav>
+
+    <main class="conteudo-principal">
+
+      <!-- ===================== VISÃO: LISTA DE PRODUTOS ===================== -->
+      <section id="visao-lista" class="visao">
+        <div class="cabecalho-tela">
+          <h1>Produtos</h1>
+          <button type="button" class="botao botao-primario" id="botao-novo-produto">+ Novo Produto</button>
+        </div>
+
+        <div class="barra-busca">
+          <input
+            type="text"
+            id="campo-busca"
+            class="campo campo-busca"
+            placeholder="Buscar por nome, código ou categoria..."
+            autocomplete="off"
+          >
+        </div>
+
+        <div id="lista-produtos" class="lista-produtos"></div>
+
+        <p id="mensagem-lista-vazia" class="mensagem-vazia" hidden>
+          Nenhum produto encontrado.
+        </p>
+      </section>
+
+      <!-- ============== VISÃO: CADASTRO / EDIÇÃO DE PRODUTO ============== -->
+      <section id="visao-formulario" class="visao" hidden>
+        <div class="cabecalho-tela">
+          <h1 id="titulo-formulario">Novo Produto</h1>
+          <button type="button" class="botao botao-secundario" id="botao-voltar-lista">← Voltar</button>
+        </div>
+
+        <form id="formulario-produto" class="formulario-produto" novalidate>
+          <input type="hidden" id="campo-id-produto">
+
+          <div class="campo-grupo">
+            <label for="campo-nome">Nome *</label>
+            <input type="text" id="campo-nome" class="campo" required>
+          </div>
+
+          <div class="campo-linha">
+            <div class="campo-grupo">
+              <label for="campo-categoria">Categoria</label>
+              <input type="text" id="campo-categoria" class="campo" placeholder="Ex.: Anel, Colar, Brinco">
+            </div>
+            <div class="campo-grupo">
+              <label for="campo-cor">Cor</label>
+              <input type="text" id="campo-cor" class="campo">
+            </div>
+            <div class="campo-grupo">
+              <label for="campo-formato">Formato</label>
+              <input type="text" id="campo-formato" class="campo">
+            </div>
+          </div>
+
+          <div class="campo-linha">
+            <div class="campo-grupo">
+              <label for="campo-preco-vista">Preço à vista (R$) *</label>
+              <input type="number" id="campo-preco-vista" class="campo" min="0" step="0.01" required>
+            </div>
+            <div class="campo-grupo">
+              <label for="campo-preco-prazo">Preço a prazo (R$)</label>
+              <input type="number" id="campo-preco-prazo" class="campo" min="0" step="0.01">
+            </div>
+          </div>
+
+          <div class="campo-linha">
+            <div class="campo-grupo">
+              <label for="campo-desconto-maximo">Desconto máximo permitido (%)</label>
+              <input type="number" id="campo-desconto-maximo" class="campo" min="0" max="100" step="1" value="0">
+            </div>
+            <div class="campo-grupo">
+              <label for="campo-estoque">Quantidade em estoque *</label>
+              <input type="number" id="campo-estoque" class="campo" min="0" step="1" required>
+            </div>
+          </div>
+
+          <div class="campo-grupo">
+            <label for="campo-barcode">Código de barras (gerado automaticamente)</label>
+            <input type="text" id="campo-barcode" class="campo" readonly>
+          </div>
+
+          <div class="campo-grupo">
+            <label for="campo-foto">Foto do produto</label>
+            <input type="file" id="campo-foto" accept="image/png, image/jpeg, image/webp">
+            <div class="previa-foto-container">
+              <img id="previa-foto" class="previa-foto" hidden alt="Prévia da foto do produto">
+              <p id="mensagem-sem-foto" class="mensagem-sem-foto">Nenhuma foto selecionada ainda.</p>
+            </div>
+            <p id="status-upload-foto" class="status-upload" hidden></p>
+          </div>
+
+          <div class="campo-grupo campo-checkbox" id="grupo-ativo" hidden>
+            <label>
+              <input type="checkbox" id="campo-ativo" checked>
+              Produto ativo (aparece disponível para maletas e vendas)
+            </label>
+          </div>
+
+          <p id="mensagem-erro-formulario" class="mensagem-erro" hidden></p>
+
+          <div class="acoes-formulario">
+            <button type="button" class="botao botao-secundario" id="botao-cancelar-formulario">Cancelar</button>
+            <button type="submit" class="botao botao-primario" id="botao-salvar-produto">Salvar Produto</button>
+          </div>
+        </form>
+      </section>
+
+    </main>
+  </div>
+
+  <script type="module" src="./produtos.js"></script>
+</body>
+</html>

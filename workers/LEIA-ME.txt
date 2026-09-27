@@ -20,11 +20,41 @@ telas/02-vendedoras/vendedoras.js.
 Passo a passo completo de publicação: ver o relatório da Sessão 2
 (RELATORIO_SESSAO_2.md), seção "Passo a passo de configuração".
 
-PENDENTE PARA A SESSÃO 3
+
+upload-foto-produto.js  (publicado na Sessão 3)
+--------------------------------------------------
+O que faz: recebe da tela "Produtos" (Admin) o arquivo de uma foto e o
+barcodeId do produto, confere que quem está pedindo é realmente a Admin
+logada (mesmo padrão de verificação do Worker acima), salva a foto num
+bucket do Cloudflare R2, e devolve a URL pública final para a tela gravar
+no campo "photoUrl" do produto.
+
+Diferente do Worker de login, este NÃO usa uma chave de acesso separada:
+o bucket é ligado a ele por uma "R2 Bucket Binding", feita direto no
+painel da Cloudflare (aba "Settings" > "Bindings" do Worker), usando o
+nome de variável BUCKET_FOTOS_PRODUTOS. Sem essa ligação configurada,
+o Worker responde com erro "bucket ainda não foi ligado".
+
+Antes de publicar, é preciso preencher no topo do arquivo:
+- FIREBASE_API_KEY: a mesma "apiKey" que já está em core/firebase-config.js.
+- URL_PUBLICA_BUCKET: o endereço público do bucket R2, copiado do painel
+  da Cloudflare depois de habilitar "Public Development URL" no bucket
+  (algo como "https://pub-XXXXXXXXXXXXXXXX.r2.dev").
+- (FIREBASE_PROJECT_ID e ORIGEM_PERMITIDA já vêm preenchidos.)
+
+Depois de publicar E de ligar o bucket (Binding), copie o endereço que a
+Cloudflare gerar (algo como
+"upload-foto-produto.SEU-USUARIO.workers.dev") e cole na constante
+URL_WORKER_UPLOAD_FOTO, no topo de telas/03-produtos/produtos.js.
+
+Passo a passo completo de publicação (criar bucket, habilitar acesso
+público, criar o Worker, ligar o bucket a ele, colar o código, preencher
+as constantes): ver o relatório da Sessão 3 (RELATORIO_SESSAO_3.md),
+seção "Passo a passo de configuração".
+
+
+PENDENTE PARA SESSÕES FUTURAS
 --------------------------
-Worker de upload de fotos para o Cloudflare R2 (cadastro de produtos).
-Motivo de ser um Worker (e não upload direto do navegador): fazer upload
-direto do navegador para o R2 exigiria expor a chave secreta no código,
-visível a qualquer visitante do site. O Worker guarda essa chave em
-segurança e devolve uma URL temporária de upload.
-Pode reaproveitar a mesma conta Cloudflare já criada na Sessão 2.
+Nenhum Worker novo pendente no momento. Sessões futuras que precisarem
+de mais uma peça de servidor (ex.: envio de recibo por WhatsApp, Fase 2)
+devem registrar aqui, do mesmo jeito, o que falta.

@@ -47,13 +47,15 @@ export function criarCabecalho({ nomeUsuario, aoSair, aoAlternarTema }) {
 }
 
 // Acrescentado na Sessão 2: menu lateral usado pelas telas do Admin.
-// Sessões futuras (Produtos, Maletas, Vendas, Clientes, Fechamento)
-// devem acrescentar seus próprios itens na lista "itens" abaixo,
-// sem duplicar este menu em outro arquivo.
+// Sessões futuras (Maletas, Vendas, Clientes, Fechamento) devem
+// acrescentar seus próprios itens na lista "itens" abaixo, sem
+// duplicar este menu em outro arquivo.
 export function criarMenuLateralAdmin({ itemAtivo } = {}) {
   const itens = [
     { rotulo: 'Início', href: '../01-inicio/inicio.html', chave: 'inicio' },
-    { rotulo: 'Vendedoras', href: '../02-vendedoras/vendedoras.html', chave: 'vendedoras' }
+    { rotulo: 'Vendedoras', href: '../02-vendedoras/vendedoras.html', chave: 'vendedoras' },
+    // Acrescentado na Sessão 3:
+    { rotulo: 'Produtos', href: '../03-produtos/produtos.html', chave: 'produtos' }
     // Sessões futuras: acrescentar itens aqui.
   ];
 

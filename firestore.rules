@@ -55,6 +55,22 @@ service cloud.firestore {
       allow delete: if false;
     }
 
+    // ---------- Coleção "products" (liberada na Sessão 3) ----------
+    match /products/{productId} {
+
+      // Qualquer pessoa logada (Admin OU Vendedora) pode LER o catálogo
+      // de produtos — necessário para as próximas sessões (Maletas,
+      // Vendas), onde a vendedora precisa ver os produtos disponíveis.
+      allow read: if request.auth != null;
+
+      // Só a Admin pode criar ou atualizar produtos.
+      allow create, update: if ehAdminLogado();
+
+      // Sem exclusão, mesmo padrão das outras coleções — desativar um
+      // produto é feito com o campo "active", nunca apagando o documento.
+      allow delete: if false;
+    }
+
     // ---------- Todas as outras coleções: bloqueadas até serem construídas ----------
     match /{colecaoQualquer}/{documentoQualquer} {
       allow read, write: if false;
