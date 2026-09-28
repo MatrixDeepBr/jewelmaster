@@ -55,7 +55,9 @@ export function criarMenuLateralAdmin({ itemAtivo } = {}) {
     { rotulo: 'Início', href: '../01-inicio/inicio.html', chave: 'inicio' },
     { rotulo: 'Vendedoras', href: '../02-vendedoras/vendedoras.html', chave: 'vendedoras' },
     // Acrescentado na Sessão 3:
-    { rotulo: 'Produtos', href: '../03-produtos/produtos.html', chave: 'produtos' }
+    { rotulo: 'Produtos', href: '../03-produtos/produtos.html', chave: 'produtos' },
+    // Acrescentado na Sessão 4:
+    { rotulo: 'Maletas', href: '../04-maletas/maletas.html', chave: 'maletas' }
     // Sessões futuras: acrescentar itens aqui.
   ];
 

@@ -83,6 +83,35 @@ service cloud.firestore {
       allow delete: if false;
     }
 
+    // ---------- Coleção "bags" (liberada na Sessão 4) ----------
+    // Maletas. O campo sellerId guarda o UID (login) da vendedora, o mesmo
+    // valor de request.auth.uid — por isso a regra da vendedora é direta.
+    match /bags/{bagId} {
+
+      // A Admin lê, cria e atualiza qualquer maleta.
+      allow read, create, update: if ehAdminLogado();
+
+      // A vendedora lê APENAS as maletas dela.
+      allow read: if request.auth != null && resource.data.sellerId == request.auth.uid;
+
+      allow delete: if false;
+    }
+
+    // ---------- Coleção "bagItems" (liberada na Sessão 4) ----------
+    // Cada item guarda também sellerId (cópia do dono da maleta), para a
+    // regra não precisar de consulta extra.
+    match /bagItems/{bagItemId} {
+
+      // A Admin lê, cria e atualiza qualquer item.
+      allow read, create, update: if ehAdminLogado();
+
+      // A vendedora lê APENAS itens de maletas dela. Ao consultar, a
+      // vendedora deve filtrar também por sellerId == o próprio uid.
+      allow read: if request.auth != null && resource.data.sellerId == request.auth.uid;
+
+      allow delete: if false;
+    }
+
     // ---------- Todas as outras coleções: bloqueadas até serem construídas ----------
     match /{colecaoQualquer}/{documentoQualquer} {
       allow read, write: if false;

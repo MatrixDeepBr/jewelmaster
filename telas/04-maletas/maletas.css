@@ -1,0 +1,97 @@
+/* telas/04-maletas/maletas.css — estilos próprios da tela de Maletas.
+   O layout (.layout-admin, .area-menu-lateral) vem de core/navegacao.css. */
+
+.maleta-topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaco-3);
+  flex-wrap: wrap;
+  margin-bottom: var(--espaco-3);
+}
+.maleta-titulo { font-size: var(--texto-titulo); margin: 0; }
+.maleta-subtitulo { color: var(--cor-texto-secundario); font-size: var(--texto-corpo); margin: 0; }
+
+/* Botões */
+.maleta-botao,
+.maleta-botao-sec,
+.maleta-botao-perigo {
+  font-family: var(--fonte-base);
+  font-size: var(--texto-corpo);
+  padding: var(--espaco-2) var(--espaco-3);
+  border-radius: var(--raio-pequeno);
+  border: 1px solid var(--cor-acento);
+  cursor: pointer;
+}
+.maleta-botao { background: var(--cor-acento); color: var(--cor-acento-texto); }
+.maleta-botao:hover { background: var(--cor-acento-hover); }
+.maleta-botao:disabled { opacity: 0.5; cursor: not-allowed; }
+.maleta-botao-sec { background: var(--cor-superficie); color: var(--cor-texto-principal); border-color: var(--cor-borda); }
+.maleta-botao-sec:hover { background: var(--cor-acento-claro); }
+.maleta-botao-perigo { background: var(--cor-superficie); color: var(--cor-status-critico); border-color: var(--cor-status-critico); }
+
+/* Cartões e listas */
+.maleta-card {
+  background: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-medio);
+  box-shadow: var(--sombra-card);
+  padding: var(--espaco-3);
+  margin-bottom: var(--espaco-3);
+}
+.maleta-lista { display: flex; flex-direction: column; gap: var(--espaco-2); }
+.maleta-linha {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaco-3);
+  flex-wrap: wrap;
+  padding: var(--espaco-2) var(--espaco-3);
+  background: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-medio);
+}
+.maleta-linha-info { display: flex; flex-direction: column; gap: var(--espaco-1); min-width: 0; }
+.maleta-linha-nome { font-weight: 600; }
+.maleta-linha-detalhe { color: var(--cor-texto-secundario); font-size: var(--texto-pequeno); }
+.maleta-linha-acoes { display: flex; gap: var(--espaco-2); align-items: center; }
+.maleta-linha-conferida { border-color: var(--cor-status-ok); }
+.maleta-vazio { color: var(--cor-texto-secundario); padding: var(--espaco-4) 0; text-align: center; }
+
+/* Etiqueta de status */
+.maleta-badge {
+  display: inline-block;
+  padding: 2px var(--espaco-2);
+  border-radius: var(--raio-pill);
+  font-size: var(--texto-pequeno);
+  color: #1B1B1B;
+}
+.maleta-badge-montando { background: var(--cor-status-atencao); }
+.maleta-badge-open { background: var(--cor-status-ok); color: #FFFFFF; }
+.maleta-badge-closed { background: var(--cor-borda); }
+
+/* Formulário */
+.maleta-campo { display: flex; flex-direction: column; gap: var(--espaco-1); margin-bottom: var(--espaco-3); }
+.maleta-campo label { font-size: var(--texto-pequeno); color: var(--cor-texto-secundario); }
+.maleta-campo select,
+.maleta-campo input {
+  font-family: var(--fonte-base);
+  font-size: var(--texto-destaque);
+  padding: var(--espaco-2);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-pequeno);
+  background: var(--cor-superficie);
+  color: var(--cor-texto-principal);
+}
+.maleta-linha-campo { display: flex; gap: var(--espaco-2); align-items: flex-end; flex-wrap: wrap; }
+.maleta-linha-campo .maleta-campo { flex: 1; min-width: 180px; margin-bottom: 0; }
+
+/* Resumo e contador */
+.maleta-resumo { display: flex; gap: var(--espaco-4); flex-wrap: wrap; align-items: center; }
+.maleta-resumo-item { display: flex; flex-direction: column; }
+.maleta-resumo-valor { font-size: var(--texto-titulo); font-weight: 600; }
+.maleta-resumo-rotulo { font-size: var(--texto-pequeno); color: var(--cor-texto-secundario); }
+.maleta-contador { font-size: var(--texto-titulo); font-weight: 600; }
+.maleta-contador-completo { color: var(--cor-status-ok); }
+.maleta-barra-acoes { display: flex; gap: var(--espaco-2); flex-wrap: wrap; margin-top: var(--espaco-3); }
+.maleta-aviso { color: var(--cor-texto-secundario); font-size: var(--texto-pequeno); }
