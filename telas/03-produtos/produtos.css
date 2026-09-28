@@ -218,3 +218,73 @@
     flex-direction: column;
   }
 }
+
+/* ---------- Acréscimo: categorias e código curto ---------- */
+
+.acoes-cabecalho {
+  display: flex;
+  gap: var(--espaco-2);
+  flex-wrap: wrap;
+}
+
+.aviso-campo {
+  font-size: var(--texto-pequeno);
+  color: var(--cor-texto-secundario);
+  margin: 0;
+}
+
+.card-produto__codigo-curto {
+  font-size: var(--texto-destaque);
+  font-weight: 700;
+  color: var(--cor-acento);
+  letter-spacing: 0.5px;
+}
+
+.grade-categorias {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--espaco-4);
+  align-items: start;
+}
+
+.titulo-card {
+  font-size: var(--texto-titulo);
+  margin: 0 0 var(--espaco-3) 0;
+  color: var(--cor-texto-principal);
+}
+
+.lista-categorias {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+}
+
+.item-categoria {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaco-2);
+  padding: var(--espaco-2) var(--espaco-3);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-pequeno);
+}
+
+.item-categoria__nome {
+  color: var(--cor-texto-principal);
+}
+
+.item-categoria__prefixo {
+  font-family: monospace;
+  font-weight: 700;
+  color: var(--cor-acento);
+  margin-left: var(--espaco-2);
+}
+
+.formulario-categoria {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-3);
+}

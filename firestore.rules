@@ -71,6 +71,18 @@ service cloud.firestore {
       allow delete: if false;
     }
 
+    // ---------- Coleção "categories" (liberada no acréscimo da Sessão 3) ----------
+    // Categorias de produto (ex.: "Anel", prefixo "AN"), usadas para
+    // sugerir o código curto (shortCode) dos produtos.
+    match /categories/{categoryId} {
+
+      // Só a Admin pode ler, criar e editar categorias.
+      allow read, create, update: if ehAdminLogado();
+
+      // Sem exclusão por enquanto.
+      allow delete: if false;
+    }
+
     // ---------- Todas as outras coleções: bloqueadas até serem construídas ----------
     match /{colecaoQualquer}/{documentoQualquer} {
       allow read, write: if false;

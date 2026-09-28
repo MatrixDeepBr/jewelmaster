@@ -20,7 +20,10 @@
       <section id="visao-lista" class="visao">
         <div class="cabecalho-tela">
           <h1>Produtos</h1>
-          <button type="button" class="botao botao-primario" id="botao-novo-produto">+ Novo Produto</button>
+          <div class="acoes-cabecalho">
+            <button type="button" class="botao botao-secundario" id="botao-gerenciar-categorias">Gerenciar categorias</button>
+            <button type="button" class="botao botao-primario" id="botao-novo-produto">+ Novo Produto</button>
+          </div>
         </div>
 
         <div class="barra-busca">
@@ -57,8 +60,11 @@
 
           <div class="campo-linha">
             <div class="campo-grupo">
-              <label for="campo-categoria">Categoria</label>
-              <input type="text" id="campo-categoria" class="campo" placeholder="Ex.: Anel, Colar, Brinco">
+              <label for="campo-categoria">Categoria *</label>
+              <select id="campo-categoria" class="campo" required></select>
+              <p id="mensagem-sem-categorias" class="aviso-campo" hidden>
+                Nenhuma categoria cadastrada ainda. Cancele, clique em "Gerenciar categorias" na lista de produtos e cadastre a primeira.
+              </p>
             </div>
             <div class="campo-grupo">
               <label for="campo-cor">Cor</label>
@@ -93,6 +99,12 @@
           </div>
 
           <div class="campo-grupo">
+            <label for="campo-short-code">Código curto *</label>
+            <input type="text" id="campo-short-code" class="campo" maxlength="12" autocomplete="off" placeholder="Ex.: AN105">
+            <p class="aviso-campo">Sugerido ao escolher a categoria. Pode ser alterado, mas não pode repetir o de outro produto.</p>
+          </div>
+
+          <div class="campo-grupo">
             <label for="campo-barcode">Código de barras (gerado automaticamente)</label>
             <input type="text" id="campo-barcode" class="campo" readonly>
           </div>
@@ -121,6 +133,47 @@
             <button type="submit" class="botao botao-primario" id="botao-salvar-produto">Salvar Produto</button>
           </div>
         </form>
+      </section>
+
+      <!-- ================== VISÃO: GERENCIAR CATEGORIAS ================== -->
+      <section id="visao-categorias" class="visao" hidden>
+        <div class="cabecalho-tela">
+          <h1>Categorias</h1>
+          <button type="button" class="botao botao-secundario" id="botao-voltar-produtos">← Voltar aos produtos</button>
+        </div>
+
+        <div class="grade-categorias">
+          <div class="card">
+            <h2 class="titulo-card">Categorias cadastradas</h2>
+            <ul id="lista-categorias" class="lista-categorias"></ul>
+            <p id="mensagem-categorias-vazia" class="mensagem-vazia" hidden>Nenhuma categoria cadastrada ainda.</p>
+          </div>
+
+          <div class="card">
+            <h2 id="titulo-form-categoria" class="titulo-card">Nova categoria</h2>
+            <form id="formulario-categoria" class="formulario-categoria" novalidate>
+              <input type="hidden" id="campo-id-categoria">
+
+              <div class="campo-grupo">
+                <label for="campo-nome-categoria">Nome da categoria</label>
+                <input type="text" id="campo-nome-categoria" class="campo" placeholder="Ex.: Anel" autocomplete="off">
+              </div>
+
+              <div class="campo-grupo">
+                <label for="campo-prefixo-categoria">Prefixo (2 letras)</label>
+                <input type="text" id="campo-prefixo-categoria" class="campo" maxlength="2" placeholder="Ex.: AN" autocomplete="off">
+                <p id="aviso-prefixo-categoria" class="aviso-campo" hidden>O prefixo não pode ser alterado depois de criado, para não desencontrar dos códigos dos produtos.</p>
+              </div>
+
+              <p id="mensagem-erro-categoria" class="mensagem-erro" hidden></p>
+
+              <div class="acoes-formulario">
+                <button type="button" class="botao botao-secundario" id="botao-cancelar-categoria" hidden>Cancelar edição</button>
+                <button type="submit" class="botao botao-primario" id="botao-salvar-categoria">Salvar categoria</button>
+              </div>
+            </form>
+          </div>
+        </div>
       </section>
 
     </main>
