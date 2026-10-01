@@ -28,7 +28,14 @@
 .maleta-botao:disabled { opacity: 0.5; cursor: not-allowed; }
 .maleta-botao-sec { background: var(--cor-superficie); color: var(--cor-texto-principal); border-color: var(--cor-borda); }
 .maleta-botao-sec:hover { background: var(--cor-acento-claro); }
+.maleta-botao-sec:disabled { opacity: 0.5; cursor: not-allowed; }
 .maleta-botao-perigo { background: var(--cor-superficie); color: var(--cor-status-critico); border-color: var(--cor-status-critico); }
+
+/* Alternador "Mostrar fotos" */
+.maleta-botao-fotos-ligado {
+  background: var(--cor-acento-claro);
+  border-color: var(--cor-acento);
+}
 
 /* Cartões e listas */
 .maleta-card {
@@ -51,12 +58,31 @@
   border: 1px solid var(--cor-borda);
   border-radius: var(--raio-medio);
 }
+.maleta-linha-esquerda { display: flex; align-items: center; gap: var(--espaco-3); min-width: 0; }
 .maleta-linha-info { display: flex; flex-direction: column; gap: var(--espaco-1); min-width: 0; }
 .maleta-linha-nome { font-weight: 600; }
 .maleta-linha-detalhe { color: var(--cor-texto-secundario); font-size: var(--texto-pequeno); }
 .maleta-linha-acoes { display: flex; gap: var(--espaco-2); align-items: center; }
 .maleta-linha-conferida { border-color: var(--cor-status-ok); }
 .maleta-vazio { color: var(--cor-texto-secundario); padding: var(--espaco-4) 0; text-align: center; }
+
+/* Miniatura de foto (alternador "Mostrar fotos") */
+.maleta-miniatura {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  object-fit: cover;
+  border-radius: var(--raio-pequeno);
+  border: 1px solid var(--cor-borda);
+  background: var(--cor-fundo);
+}
+.maleta-miniatura-vazia {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  border-style: dashed;
+}
 
 /* Etiqueta de status */
 .maleta-badge {
@@ -83,7 +109,7 @@
   background: var(--cor-superficie);
   color: var(--cor-texto-principal);
 }
-.maleta-linha-campo { display: flex; gap: var(--espaco-2); align-items: flex-end; flex-wrap: wrap; }
+.maleta-linha-campo { display: flex; gap: var(--espaco-2); align-items: flex-end; flex-wrap: wrap; margin-bottom: var(--espaco-3); }
 .maleta-linha-campo .maleta-campo { flex: 1; min-width: 180px; margin-bottom: 0; }
 
 /* Resumo e contador */

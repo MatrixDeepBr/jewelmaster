@@ -4,6 +4,9 @@
 // Segue o mesmo padrão de "duas visões" já usado em telas/02-vendedoras:
 // uma <section> de lista e uma <section> de formulário, alternadas via
 // atributo "hidden", dentro da mesma página (sem trocar de URL).
+//
+// Patch de Estoque (01/10/2026): o card e o formulário mostram "Na empresa"
+// x "Em maletas" (calculado por core/estoque.js).
 
 import {
   auth,
@@ -40,6 +43,8 @@ import { formatarCentavosParaReais, gerarBarcodeId } from '../../core/utils.js';
 
 import { criarCabecalho, criarMenuLateralAdmin } from '../../core/navegacao.js';
 
+import { calcularEstoque } from '../../core/estoque.js';
+
 // Endereço do Worker de upload de fotos (Cloudflare R2), publicado na
 // Sessão 3. Ver workers/upload-foto-produto.js e o relatório da Sessão 3.
 const URL_WORKER_UPLOAD_FOTO = 'https://upload-foto-produto.collornewrp.workers.dev';
@@ -59,6 +64,9 @@ let listaCompletaDeProdutos = [];
 let arquivoFotoSelecionado = null;
 let urlFotoJaSalva = null; // usada quando edita um produto que já tem foto
 let listaDeCategorias = [];
+// Resultado de calcularEstoque (productId -> { total, emMaletas, vendidas, naEmpresa, porVendedora }).
+// Fica vazio se o cálculo falhar — nesse caso a tela usa o "Estoque: N" antigo.
+let estoquePorProduto = new Map();
 // true quando a pessoa digitou/mexeu no código curto à mão — nesse caso
 // trocar a categoria não sobrescreve o que ela escreveu.
 let shortCodeEditadoManualmente = false;
@@ -96,6 +104,7 @@ const campoPrecoVista = document.getElementById('campo-preco-vista');
 const campoPrecoPrazo = document.getElementById('campo-preco-prazo');
 const campoDescontoMaximo = document.getElementById('campo-desconto-maximo');
 const campoEstoque = document.getElementById('campo-estoque');
+const caixaEstoqueInfo = document.getElementById('caixa-estoque-info');
 const campoShortCode = document.getElementById('campo-short-code');
 const mensagemSemCategorias = document.getElementById('mensagem-sem-categorias');
 const campoBarcode = document.getElementById('campo-barcode');
@@ -172,12 +181,48 @@ async function carregarProdutos() {
 
     // Mais recentes primeiro.
     listaCompletaDeProdutos.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
-
-    renderizarLista(listaCompletaDeProdutos);
   } catch (erro) {
     elementoListaProdutos.innerHTML = '';
     mostrarToast('Não foi possível carregar os produtos. Confira sua internet e tente de novo.', 'erro');
+    return;
   }
+
+  // Estoque "na empresa" x "em maletas". Se falhar, a tela continua
+  // funcionando com o "Estoque: N" antigo.
+  try {
+    estoquePorProduto = await calcularEstoque(listaCompletaDeProdutos);
+  } catch (erro) {
+    estoquePorProduto = new Map();
+    mostrarToast('Não foi possível calcular o estoque em maletas agora. Mostrando só o total cadastrado.', 'erro');
+  }
+
+  renderizarLista(listaCompletaDeProdutos);
+}
+
+function montarHtmlEstoqueCard(produto) {
+  const e = estoquePorProduto.get(produto.id);
+  if (!e) return '';
+
+  const classeNaEmpresa = e.naEmpresa < 0 ? ' estoque-numero--critico' : '';
+  const vendidas = e.vendidas > 0 ? ` · Vendidas: ${e.vendidas}` : '';
+
+  let alerta = '';
+  if (e.naEmpresa < 0) {
+    alerta = '<span class="card-produto__alerta-estoque card-produto__alerta-estoque--critico">Sem estoque na empresa (negativo: confira o total)</span>';
+  } else if (e.naEmpresa === 0) {
+    alerta = '<span class="card-produto__alerta-estoque">Sem estoque na empresa</span>';
+  }
+
+  return `
+    <div class="card-produto__estoque-bloco">
+      <div class="card-produto__estoque-numeros">
+        <span class="${classeNaEmpresa.trim()}">Na empresa: <strong>${e.naEmpresa}</strong></span>
+        <span>Em maletas: <strong>${e.emMaletas}</strong></span>
+      </div>
+      <span class="card-produto__estoque-total">Total: ${e.total}${vendidas}</span>
+      ${alerta}
+    </div>
+  `;
 }
 
 function renderizarLista(lista) {
@@ -202,6 +247,12 @@ function renderizarLista(lista) {
       ? '<span class="badge-status badge-status--inativo">Inativo</span>'
       : '<span class="badge-status badge-status--ok">Ativo</span>';
 
+    const blocoEstoque = montarHtmlEstoqueCard(produto);
+    // Sem o cálculo de estoque: volta ao "Estoque: N" antigo.
+    const estoqueAntigo = blocoEstoque
+      ? ''
+      : `<span class="card-produto__estoque">Estoque: ${produto.stockQuantity ?? 0}</span>`;
+
     card.innerHTML = `
       ${foto}
       <span class="card-produto__nome">${escaparTexto(produto.name || '(sem nome)')}</span>
@@ -209,8 +260,9 @@ function renderizarLista(lista) {
       <span class="card-produto__codigo">${escaparTexto(produto.barcodeId || '')}</span>
       <div class="card-produto__linha-inferior">
         <span class="card-produto__preco">${formatarCentavosParaReais(produto.priceCash || 0)}</span>
-        <span class="card-produto__estoque">Estoque: ${produto.stockQuantity ?? 0}</span>
+        ${estoqueAntigo}
       </div>
+      ${blocoEstoque}
       ${badge}
     `;
 
@@ -266,6 +318,31 @@ document.getElementById('botao-voltar-lista').addEventListener('click', mostrarV
 document.getElementById('botao-cancelar-formulario').addEventListener('click', mostrarVisaoLista);
 
 // ---------------------------------------------------------------------
+// Caixa informativa de estoque (só aparece na edição de produto existente)
+// ---------------------------------------------------------------------
+function preencherCaixaEstoque(produto) {
+  const e = estoquePorProduto.get(produto.id);
+  if (!e) {
+    caixaEstoqueInfo.hidden = true;
+    caixaEstoqueInfo.textContent = '';
+    return;
+  }
+
+  let texto = `Na empresa agora: ${e.naEmpresa} · Em maletas: ${e.emMaletas}`;
+  if (e.porVendedora.length > 0) {
+    const detalhe = e.porVendedora
+      .map((v) => `${v.sellerName || 'Vendedora'}: ${v.quantidade}`)
+      .join(', ');
+    texto += ` (${detalhe})`;
+  }
+  if (e.vendidas > 0) texto += ` · Vendidas: ${e.vendidas}`;
+
+  caixaEstoqueInfo.textContent = texto;
+  caixaEstoqueInfo.classList.toggle('caixa-estoque-info--critico', e.naEmpresa < 0);
+  caixaEstoqueInfo.hidden = false;
+}
+
+// ---------------------------------------------------------------------
 // Abrir formulário — novo produto
 // ---------------------------------------------------------------------
 function abrirFormularioNovo() {
@@ -273,6 +350,7 @@ function abrirFormularioNovo() {
   campoIdProduto.value = '';
   tituloFormulario.textContent = 'Novo Produto';
   grupoAtivo.hidden = true; // só existe produto inativo depois de criado
+  caixaEstoqueInfo.hidden = true; // produto novo ainda não tem peças em maletas
   campoDescontoMaximo.value = 0;
   preencherSelectCategorias('');
   campoShortCode.value = '';
@@ -307,6 +385,7 @@ function abrirFormularioEdicao(produto) {
   campoDescontoMaximo.value = produto.maxDiscountPercent || 0;
   campoEstoque.value = produto.stockQuantity ?? 0;
   campoBarcode.value = produto.barcodeId || '';
+  preencherCaixaEstoque(produto);
 
   grupoAtivo.hidden = false;
   campoAtivo.checked = produto.active !== false;
@@ -457,7 +536,16 @@ function validarFormulario() {
   if (isNaN(desconto) || desconto < 0 || desconto > 100) return 'O desconto máximo precisa estar entre 0 e 100.';
 
   const estoque = Number(campoEstoque.value);
-  if (isNaN(estoque) || estoque < 0) return 'A quantidade em estoque precisa ser um número válido, maior ou igual a zero.';
+  if (isNaN(estoque) || estoque < 0) return 'A quantidade total precisa ser um número válido, maior ou igual a zero.';
+
+  // O total não pode ficar abaixo do que já está fora da empresa (em maletas + vendidas).
+  const e = campoIdProduto.value ? estoquePorProduto.get(campoIdProduto.value) : null;
+  if (e) {
+    const minimo = e.emMaletas + e.vendidas;
+    if (estoque < minimo) {
+      return `O total não pode ser menor que ${minimo}: ${e.emMaletas} estão em maletas e ${e.vendidas} já foram vendidas.`;
+    }
+  }
 
   return null;
 }

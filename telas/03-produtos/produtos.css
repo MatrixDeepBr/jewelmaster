@@ -288,3 +288,48 @@
   flex-direction: column;
   gap: var(--espaco-3);
 }
+
+/* ---------- Acréscimo: estoque "na empresa" x "em maletas" ---------- */
+
+.card-produto__estoque-bloco {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-1);
+}
+
+.card-produto__estoque-numeros {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--espaco-2);
+  font-size: var(--texto-corpo);
+  color: var(--cor-texto-principal);
+}
+
+.card-produto__estoque-total {
+  font-size: var(--texto-pequeno);
+  color: var(--cor-texto-secundario);
+}
+
+.card-produto__alerta-estoque {
+  font-size: var(--texto-pequeno);
+  font-weight: 600;
+  color: var(--cor-status-atencao);
+}
+
+.card-produto__alerta-estoque--critico,
+.estoque-numero--critico {
+  color: var(--cor-status-critico);
+}
+
+.caixa-estoque-info {
+  font-size: var(--texto-corpo);
+  color: var(--cor-texto-principal);
+  background: var(--cor-acento-claro);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-pequeno);
+  padding: var(--espaco-2) var(--espaco-3);
+}
+
+.caixa-estoque-info--critico {
+  border-color: var(--cor-status-critico);
+}

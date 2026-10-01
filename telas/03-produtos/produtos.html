@@ -93,10 +93,13 @@
               <input type="number" id="campo-desconto-maximo" class="campo" min="0" max="100" step="1" value="0">
             </div>
             <div class="campo-grupo">
-              <label for="campo-estoque">Quantidade em estoque *</label>
+              <label for="campo-estoque">Quantidade total da empresa (física + maletas) *</label>
               <input type="number" id="campo-estoque" class="campo" min="0" step="1" required>
+              <p class="aviso-campo">Some aqui tudo o que a empresa tem desse produto, inclusive as peças que estão em maletas.</p>
             </div>
           </div>
+
+          <div id="caixa-estoque-info" class="caixa-estoque-info" hidden></div>
 
           <div class="campo-grupo">
             <label for="campo-short-code">Código curto *</label>

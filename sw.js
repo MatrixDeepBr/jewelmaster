@@ -7,7 +7,7 @@
 // Aumente este número (ex: 'jewelmaster-v5') sempre que publicar uma
 // mudança de arquivos e quiser forçar os celulares/navegadores a
 // buscarem a versão nova em vez de continuar usando o cache antigo.
-const VERSAO_CACHE = 'jewelmaster-v4';
+const VERSAO_CACHE = 'jewelmaster-v5';
 
 // Arquivos do "esqueleto" do app, guardados em cache na instalação para
 // o app abrir mesmo sem internet depois da primeira visita.
@@ -21,6 +21,7 @@ const ARQUIVOS_ESQUELETO = [
   './core/components.css',
   './core/components.js',
   './core/utils.js',
+  './core/estoque.js',
   './core/navegacao.js',
   './core/navegacao.css',
   './telas/00-login/login.html',
@@ -35,6 +36,9 @@ const ARQUIVOS_ESQUELETO = [
   './telas/03-produtos/produtos.html',
   './telas/03-produtos/produtos.js',
   './telas/03-produtos/produtos.css',
+  './telas/04-maletas/maletas.html',
+  './telas/04-maletas/maletas.js',
+  './telas/04-maletas/maletas.css',
   './assets/icons/icon-192.png',
   './assets/icons/icon-512.png',
   './assets/icons/apple-touch-icon.png',
